@@ -1,0 +1,46 @@
+/* Estilo base del botón */
+.fucsia-button {
+  
+    padding: 12px 24px;
+    font-size: 16px;
+    color: yellow;
+    background-color: #696768; /* Color fucsia */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Efecto de transición al pasar el cursor */
+  }
+  
+  /* Efecto al pasar el cursor sobre el botón */
+  .fucsia-button:hover {
+    background-color: #333133; /* Color fucsia más claro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transform: scale(1.05); /* Escalado del botón */
+  }
+  
+  /* Efecto al hacer clic en el botón */
+  .fucsia-button:active {
+    background-color: #181617; /* Color fucsia más oscuro */
+    transform: scale(0.95); /* Escalado del botón */
+  }
+
+  .div{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    color: yellow;
+   height: 50vh;
+    width: 500vh;
+
+  }
+  .landing-container{
+    padding: 50%;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    
+  }
+  .Henry{
+    color: yellow;
+  }
