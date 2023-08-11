@@ -9,6 +9,8 @@ import {
   CREATE_ACTIVITY,
   CREATE_ACTIVITY_FAILURE,
   RESET,
+  ORDER_POBLACION,
+  GET_ACTIVITY
 } from "./ActionTypes";
 
 export const getcharacter = () => {
@@ -108,3 +110,20 @@ export const createActivity = (activityData) => {
     }
   };
 };
+ 
+export const orderForPoblacion = (num) =>{
+  return{
+    type: ORDER_POBLACION,
+    payload: num
+  }
+}
+
+export const getactivity = () =>{
+return async (dispatch)=>{
+const {data} = await axios.get("http://localhost:3001/activity")
+dispatch({
+type:GET_ACTIVITY,
+payload:data
+})
+}
+}

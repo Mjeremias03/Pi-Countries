@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Search from '../Search/Search';
 import { useDispatch } from 'react-redux';
 import style from './Navbar.module.css';
-import { filterforcontinent, orderCountries, reset } from '../../Redux/Actions';
+import { filterforcontinent, orderCountries, orderForPoblacion, reset } from '../../Redux/Actions';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,9 @@ const Navbar = () => {
   const handleFilter = (event) => {
     dispatch(filterforcontinent(event.target.value));
   };
-
+const HandlerPoblacion = (event) =>{
+  dispatch(orderForPoblacion(event.target.value))
+}
   return (
     <div className={style.nav}>
       <Search />
@@ -38,6 +40,13 @@ const Navbar = () => {
         </Link>
       </div>
       <div className={style.selectcontainer}>
+        <select onChange={HandlerPoblacion} className={style.select}  > 
+        <option value="" disabled>
+            Poblacion
+          </option>
+          <option value="Menos">Menor-Mayor</option>
+          <option value="Mas">Mayor-Menor</option>
+        </select>
         <select className={style.select} onChange={handleFilter} value="">
           <option value="" disabled>
             Select Continent 

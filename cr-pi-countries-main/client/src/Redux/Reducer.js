@@ -6,11 +6,14 @@ import {
   ORDER,
   SET_PAGE,
   RESET,
+  ORDER_POBLACION,
+  GET_ACTIVITY
 } from "./ActionTypes";
 
 const initialState = {
   countries: [],
   allcountries: [],
+  activity:[],
   detail: [],
   currentPage: 1,
   countriesPerPage: 10,
@@ -63,6 +66,22 @@ export default function reducer(state = initialState, action) {
           ...state,
           countries: state.allcountries
         }
+        case ORDER_POBLACION:
+          const countriesByPopAsc = [...state.countries];
+          if(action.payload === "Menos"){
+            countriesByPopAsc.sort((a, b) => a.poblacion - b.poblacion);
+          }else{
+            countriesByPopAsc.sort((a, b) => b.poblacion - a.poblacion);
+          }
+          return {
+            ...state,
+            countries: countriesByPopAsc,
+          };
+          case GET_ACTIVITY:
+            return{
+              ...state,
+              activity: action.payload
+            }
     default:
       return state;
   }

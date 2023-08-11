@@ -5,23 +5,33 @@ import { createActivity } from "../../Redux/Actions";
 
 const Form = () => {
   const dispatch = useDispatch();
-  const countriess = useSelector((state) => state.countries);
+  const countriess = useSelector((state) => state.countries)
   const [formData, setFormData] = useState({
     name: "",
     temporada: "",
     dificultad: "",
     duracion: 1,
-    countries: "",
+    countries: [],
   });
 
   const [errors, setErrors] = useState({
-    name: "",
+    name: "Requerido",
     temporada: "",
     dificultad: "",
     duracion: "",
     countries: "",
   });
 
+  const clickbandera = (event) => {
+    const countryToRemove = event.target.getAttribute("data-country");
+    const updatedCountries = formData.countries.filter(country => country !== countryToRemove);
+    
+    setFormData({
+      ...formData,
+      countries: updatedCountries,
+    });
+  };
+  
   const validate = () => {
     let newErrors = {
       name: "",
@@ -31,40 +41,56 @@ const Form = () => {
       countries: "",
     };
 
+    if (formData.countries.length === 0) {
+      newErrors.countries = "Seleccione un pais porfavor";
+    }
+
     if (formData.duracion < 1 || formData.duracion > 24) {
       newErrors.duracion = "La duración debe estar entre 1 y 24 horas";
     }
 
-    if (formData.name === "0") {
+    if (formData.name === "") {
       newErrors.name = "Debe tener mas de un caracter";
     }
 
     setErrors(newErrors);
   };
   const handleChange = (event) => {
-    const { name, value, options } = event.target;
+    const { name, options } = event.target;
+  
+    validate();
   
     if (name === "countries") {
-      const selectedCountries = Array.from(options)
+      const selectedCountryIds = Array.from(options)
         .filter((option) => option.selected)
         .map((option) => option.value);
   
+      // Filtrar los IDs duplicados antes de agregarlos a la lista
+      const uniqueSelectedCountryIds = selectedCountryIds.filter(
+        (id) => !formData.countries.includes(id)
+      );
+  
+      // Limitar la cantidad de países seleccionados a 6
+      if (formData.countries.length + uniqueSelectedCountryIds.length > 5) {
+        return;
+      }
+  
       setFormData({
         ...formData,
-        [name]: selectedCountries,
+        [name]: [...formData.countries, ...uniqueSelectedCountryIds],
       });
     } else {
+      const value = event.target.value;
       setFormData({
         ...formData,
         [name]: value,
       });
     }
-  
-    // Resto del código de validación y actualización
   };
+  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     validate();
 
     if (Object.values(errors).every((error) => error === "")) {
@@ -75,21 +101,23 @@ const Form = () => {
       }
     }
   };
-  
+
+
   return (
     <form onSubmit={handleSubmit}>
       <div className={style.form}>
         <label className={style.label}>Name: </label>
         <input
+          autoComplete="off"
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
           className={style.input}
         />
-        <span>{errors.name}</span>
+        <span className={style.error}>{errors.name}</span>
 
-        <label>Dificultad:</label>
+        <label className={style.label}>Dificultad:</label>
         <input
           className={style.dificultad}
           type="range"
@@ -100,6 +128,7 @@ const Form = () => {
           value={formData.dificultad}
           onChange={handleChange}
         />
+        <span className={style.dificultadValue}>{formData.dificultad}</span>
         <span>{errors.dificultad}</span>
 
         <label className={style.label}>Duracion(horas):</label>
@@ -114,10 +143,12 @@ const Form = () => {
         />
         <span>{errors.duracion}</span>
 
-        
-          <label className={style.label}>Temporada:</label>
-          <div>
-            <label  htmlFor="Otoño">Otoño</label>
+        <label className={style.temporadas}>Temporadas: </label>
+        <div className={style.temporada}>
+          <div className={style.temporadaItem}>
+            <label className={style.labeltemporada} htmlFor="Otoño">
+              Otoño
+            </label>
             <input
               type="radio"
               id="Otoño"
@@ -126,8 +157,12 @@ const Form = () => {
               checked={formData.temporada === "Otoño"}
               onChange={handleChange}
             />
+          </div>
 
-            <label  htmlFor="Verano">Verano</label>
+          <div className={style.temporadaItem}>
+            <label className={style.labeltemporada} htmlFor="Verano">
+              Verano
+            </label>
             <input
               type="radio"
               id="Verano"
@@ -136,8 +171,12 @@ const Form = () => {
               checked={formData.temporada === "Verano"}
               onChange={handleChange}
             />
+          </div>
 
-            <label htmlFor="Primavera">Primavera</label>
+          <div className={style.temporadaItem}>
+            <label className={style.labeltemporada} htmlFor="Primavera">
+              Primavera
+            </label>
             <input
               type="radio"
               id="Primavera"
@@ -146,8 +185,12 @@ const Form = () => {
               checked={formData.temporada === "Primavera"}
               onChange={handleChange}
             />
+          </div>
 
-            <label htmlFor="Invierno">Invierno</label>
+          <div className={style.temporadaItem}>
+            <label className={style.labeltemporada} htmlFor="Invierno">
+              Invierno
+            </label>
             <input
               type="radio"
               id="Invierno"
@@ -155,28 +198,41 @@ const Form = () => {
               value="Invierno"
               checked={formData.temporada === "Invierno"}
               onChange={handleChange}
-              
             />
           </div>
-          <span>{errors.temporada}</span>
-     
+        </div>
 
         <label className={style.label}>País:</label>
         <div className={style.select}>
-          <select
-            name="countries"
-            value={formData.countries}
-            onChange={handleChange}
-         
-          >
-            {countriess.map((country) => (
-              <option key={country.name} value={country.name}>
-                {country.name}
-              </option>
-            ))}
-          </select>
-          <span>{errors.pais}</span>
-        </div>
+  <select
+    name="countries"
+    value={formData.countries}
+    onChange={handleChange}
+    multiple
+    size={Math.min(6, countriess.length)}
+    style={{ maxHeight: "200px" }} 
+    className={style.customSelect}
+  >
+    {countriess.map((country) => (
+      <option key={country.imagen} value={country.imagen}>
+        {country.name}
+      </option>
+    ))}
+  </select>
+</div>
+<p>Paises seleccionados: </p>
+<div className={style.selectedImages}>
+  {formData.countries.map((imageSrc, index) => (
+    <div key={index} className={style.selectedImageContainer}>
+      <img src={imageSrc} alt={`Country ${index}`} className={style.selectedImage} />
+      <button data-country={imageSrc} onClick={clickbandera} className={style.removeButton}>
+        x
+      </button>
+    </div>
+  ))}
+</div>
+
+    
 
         <button className={style.submitBtn} type="submit">
           Submit

@@ -9,7 +9,7 @@
   width: 300px; /* Set your desired card width */
   height: 400px; /* Set your desired card height */
   border-radius: 10px;
-  padding: 30px;
+  padding: 10px;
   color: rgb(242, 242, 245);
   text-align: center;
   text-overflow: ellipsis; /* Truncate long texts with ellipsis */

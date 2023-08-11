@@ -6,11 +6,14 @@ import {Route,Routes} from 'react-router-dom'
 import Navbar from './Componentes/Navbar/Navbar'
 import Detail from './Componentes/Detail/Detail'
 import Form from './Componentes/Form/Form'
-
+import { useLocation } from 'react-router-dom'
 function App() {
+  const location = useLocation()
+  console.log(location)
   return (
     <div className={style.app}>
-    <Navbar/>
+
+    {location.pathname !== "/" && <Navbar/>}
 <Routes>
   <Route path='/Detail/:id' element={<Detail/>}/>
   <Route path='/' element={<LandingPage/>}/>

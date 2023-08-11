@@ -7,21 +7,19 @@
 .label{
     justify-content: center;
     display: flex;
-    margin-top: 20px;
+    margin-top: 40px;
     flex-direction: row;
   
 }
 .form {
-  background-color: #1011109f;
+  background-color: #101110d3;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
  color: aliceblue;
-  margin-top: 10px;
-  
-  width: 100%; /* Ajusta el ancho según tus necesidades */
-  height: 500px; /* Ajusta la altura según tus necesidades */
+ width: 1000px;
+  height: 1000px; /* Ajusta la altura según tus necesidades */
 }
 
 
@@ -78,20 +76,31 @@
   border-color: #0a0a0a;
 }
 
-/* Estilos para las options */
-.select select option {
-  background-color: #1b1a1a65;
-  color: #f0e7e7;
- 
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+/* Form.module.css */
+.customSelect {
+  appearance: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+  max-height: 150px;
+  overflow-y: auto; 
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.select select option:hover {
-  background-color: #39ff14;
-  color: #fff;
-  width: 10px;
-  padding: 100px;
+.customSelect:hover {
+  border-color: #66afe9;
+  box-shadow: 0 0 5px #66afe9;
 }
+
+/* Cambiar el color del texto de las opciones seleccionadas */
+.customSelect option:checked {
+  background-color: #66afe9;
+  color: white;
+}
+
 .temporada{
   margin-top: 20px;
 }
@@ -113,4 +122,50 @@
 width: 30%;
 margin-top: 10px;
 border: 0px solid;
+}
+.error{
+background-color: rgb(217, 230, 217) ;
+color: #0a0a0a;
+}
+.temporada {
+  display: flex;
+  flex-direction: row; /* Para alinear horizontalmente */
+}
+
+.temporadaItem {
+  display: flex;
+  flex-direction: column; /* Para alinear verticalmente */
+  margin-right: 20px; /* Espacio entre los elementos */
+}
+.temporadas{
+  margin-top: 25px;
+}
+.checkboxContainer {
+  display: flex; /* Mostrar los checkboxes en línea */
+  flex-wrap: wrap; /* Permitir que los checkboxes se envuelvan a la siguiente línea si no caben */
+}
+
+.checkboxItem {
+  margin-right: 10px; /* Agregar espacio entre los checkboxes */
+}
+/* Cambia el nombre de la clase a algo más específico */
+.selectedImages {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+}
+img{
+  height: 80px;
+}
+
+.selectedImageContainer{
+  display: flex;
+}
+button.removeButton {
+  padding: 0px 8px; 
+  height: 30px;/* Ajusta el padding como desees */
+  font-size: 12px; /* Ajusta el tamaño de fuente como desees */
 }
