@@ -9,7 +9,6 @@ import Form from './Componentes/Form/Form'
 import { useLocation } from 'react-router-dom'
 function App() {
   const location = useLocation()
-  console.log(location)
   return (
     <div className={style.app}>
 

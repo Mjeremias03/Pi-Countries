@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const {Country}= require('../db')
+const {Country,Activity}= require('../db')
 
 const createCountries = async(name,capital,image) =>{
 const newCountrie = await Country.create({
@@ -17,25 +17,43 @@ const countriesBd = async (name) => {
                 name: {
                     [Op.iLike]: `%${name}%`
                 }
+            },
+            include: {
+                model: Activity, 
+
             }
         });
         return countries;
     }
 
-    const allCountries = await Country.findAll();
+    const allCountries = await Country.findAll({
+        include: {
+            model: Activity,
+        }
+    });
     return allCountries;
 };
 
 
-const getForIdCountries = (id) =>{
-    if(id){
-        const countriesid = Country.findByPk(id)
-        return countriesid
-    }else{
-        console.log(`no se encontro con ese ${id}`)
-    }
 
+const getForIdCountries = async (id) => {
+    if (id) {
+        const country = await Country.findByPk(id, {
+            include: {
+                model: Activity,
+            }
+        });
+
+        if (country) {
+            return country;
+        } else {
+            console.log(`No se encontró ningún país con el id ${id}`);
+        }
+    } else {
+        console.log('Se necesita proporcionar un ID válido');
+    }
 };
+
 
 module.exports = {
 createCountries,

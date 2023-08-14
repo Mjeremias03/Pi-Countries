@@ -5,12 +5,12 @@ import { createActivity } from "../../Redux/Actions";
 
 const Form = () => {
   const dispatch = useDispatch();
-  const countriess = useSelector((state) => state.countries)
+  const countriess = useSelector((state) => state.countries);
   const [formData, setFormData] = useState({
     name: "",
     temporada: "",
     dificultad: "",
-    duracion: 1,
+    duracion: "",
     countries: [],
   });
 
@@ -24,14 +24,16 @@ const Form = () => {
 
   const clickbandera = (event) => {
     const countryToRemove = event.target.getAttribute("data-country");
-    const updatedCountries = formData.countries.filter(country => country !== countryToRemove);
-    
+    const updatedCountries = formData.countries.filter(
+      (country) => country !== countryToRemove
+    );
+
     setFormData({
       ...formData,
       countries: updatedCountries,
     });
   };
-  
+
   const validate = () => {
     let newErrors = {
       name: "",
@@ -53,28 +55,31 @@ const Form = () => {
       newErrors.name = "Debe tener mas de un caracter";
     }
 
+    if (formData.countries.length === 0) {
+      newErrors.countries = "Seleccione un país";
+    }
     setErrors(newErrors);
   };
   const handleChange = (event) => {
     const { name, options } = event.target;
-  
+
     validate();
-  
+
     if (name === "countries") {
       const selectedCountryIds = Array.from(options)
         .filter((option) => option.selected)
         .map((option) => option.value);
-  
+
       // Filtrar los IDs duplicados antes de agregarlos a la lista
       const uniqueSelectedCountryIds = selectedCountryIds.filter(
         (id) => !formData.countries.includes(id)
       );
-  
+
       // Limitar la cantidad de países seleccionados a 6
       if (formData.countries.length + uniqueSelectedCountryIds.length > 5) {
         return;
       }
-  
+
       setFormData({
         ...formData,
         [name]: [...formData.countries, ...uniqueSelectedCountryIds],
@@ -87,24 +92,37 @@ const Form = () => {
       });
     }
   };
-  
 
+  const cleanForm = () => {
+    setFormData({
+      name: "",
+      temporada: "",
+      dificultad: "",
+      duracion: 1,
+      countries: [],
+    });
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     validate();
 
-    if (Object.values(errors).every((error) => error === "")) {
+    if (
+      Object.values(errors).every((error) => error === "") &&
+      formData.countries.length > 0
+    ) {
       try {
         await dispatch(createActivity(formData));
+        cleanForm();
+        alert("Actividad creada correctamente");
       } catch (error) {
         console.error("Error al crear la actividad:", error);
       }
     }
   };
 
-
+  console.log(formData.countries);
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={style.formulario}>
       <div className={style.form}>
         <label className={style.label}>Name: </label>
         <input
@@ -115,7 +133,7 @@ const Form = () => {
           onChange={handleChange}
           className={style.input}
         />
-        <span className={style.error}>{errors.name}</span>
+        <span>{errors.name}</span>
 
         <label className={style.label}>Dificultad:</label>
         <input
@@ -204,35 +222,45 @@ const Form = () => {
 
         <label className={style.label}>País:</label>
         <div className={style.select}>
-  <select
-    name="countries"
-    value={formData.countries}
-    onChange={handleChange}
-    multiple
-    size={Math.min(6, countriess.length)}
-    style={{ maxHeight: "200px" }} 
-    className={style.customSelect}
-  >
-    {countriess.map((country) => (
-      <option key={country.imagen} value={country.imagen}>
-        {country.name}
-      </option>
-    ))}
-  </select>
-</div>
-<p>Paises seleccionados: </p>
-<div className={style.selectedImages}>
-  {formData.countries.map((imageSrc, index) => (
-    <div key={index} className={style.selectedImageContainer}>
-      <img src={imageSrc} alt={`Country ${index}`} className={style.selectedImage} />
-      <button data-country={imageSrc} onClick={clickbandera} className={style.removeButton}>
-        x
-      </button>
-    </div>
-  ))}
-</div>
-
-    
+          <select
+            name="countries"
+            value={formData.countries}
+            onChange={handleChange}
+            multiple
+            size={Math.min(6, countriess.length)}
+            style={{ maxHeight: "200px" }}
+            className={style.customSelect}
+          >
+            {countriess.map((country) => (
+              <option key={country.imagen} value={country.imagen}>
+                {country.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <p>Paises seleccionados: </p>
+        <div className={style.selectedImages}>
+          {formData.countries.map((imageSrc, index) => (
+            <div key={index} className={style.selectedImageContainer}>
+              <img
+                src={imageSrc}
+                alt={`Country ${index}`}
+                className={style.selectedImage}
+              />
+              <button
+                data-country={imageSrc}
+                onClick={clickbandera}
+                className={style.removeButton}
+              >
+                x
+              </button>
+            </div>
+          ))}
+        </div>{
+          formData.countries.length === 0?(
+            <span>{errors.countries}</span>
+          ): null
+        }
 
         <button className={style.submitBtn} type="submit">
           Submit

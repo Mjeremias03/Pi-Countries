@@ -8,11 +8,9 @@ import Loading from "../Loading/Loading";
 const Home = () => {
   const dispatch = useDispatch();
     const activitis = useSelector((state)=>state.activity)
-    console.log(activitis)
     const { countries, currentPage, countriesPerPage } = useSelector(
     (state) => state
   );
-
   useEffect(() => {
     dispatch(getcharacter())
     dispatch(getactivity());
