@@ -28,7 +28,7 @@ const HandlerPoblacion = (event) =>{
       <Search />
 
       <div className={style.containerbutton}>
-      <button onClick={hanldeClick}> Reset</button>
+      <button className={style.button}onClick={hanldeClick}> Reset</button>
         <Link to="/Home">
           <button className={style.button}>Home</button>
         </Link>
@@ -40,9 +40,9 @@ const HandlerPoblacion = (event) =>{
         </Link>
       </div>
       <div className={style.selectcontainer}>
-        <select onChange={HandlerPoblacion} className={style.select}  > 
+        <select onChange={HandlerPoblacion} className={style.select}  value=""> 
         <option value="" disabled>
-            Poblacion
+        Population
           </option>
           <option value="Menos">Menor-Mayor</option>
           <option value="Mas">Mayor-Menor</option>

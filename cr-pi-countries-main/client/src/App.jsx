@@ -7,6 +7,7 @@ import Navbar from './Componentes/Navbar/Navbar'
 import Detail from './Componentes/Detail/Detail'
 import Form from './Componentes/Form/Form'
 import { useLocation } from 'react-router-dom'
+import About from './Componentes/About/About'
 function App() {
   const location = useLocation()
   return (
@@ -18,6 +19,7 @@ function App() {
   <Route path='/' element={<LandingPage/>}/>
   <Route path='/Home' element={<Home/>}/>
   <Route path='/Activity'element={<Form/>}/>
+  <Route path='/About'element={<About/>}/>
 </Routes>
     </div>
   )

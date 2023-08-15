@@ -78,10 +78,9 @@
    height: 100%;
    justify-content: center;
    align-items: center;
-  
     background-color: rgba(38, 38, 39, 0.877); 
    font-family: 'Arial', sans-serif;
-   color: #fdfdfd;
+   color: #e6e5e5;
    padding: 20px;
    border-radius: 50px;
    width: 35%;

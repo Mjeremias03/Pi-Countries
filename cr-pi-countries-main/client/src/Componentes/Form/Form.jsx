@@ -70,12 +70,10 @@ const Form = () => {
         .filter((option) => option.selected)
         .map((option) => option.value);
 
-      // Filtrar los IDs duplicados antes de agregarlos a la lista
       const uniqueSelectedCountryIds = selectedCountryIds.filter(
         (id) => !formData.countries.includes(id)
       );
 
-      // Limitar la cantidad de países seleccionados a 6
       if (formData.countries.length + uniqueSelectedCountryIds.length > 5) {
         return;
       }
