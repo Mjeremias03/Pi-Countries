@@ -230,7 +230,7 @@ const Form = () => {
             className={style.customSelect}
           >
             {countriess.map((country) => (
-              <option key={country.imagen} value={country.imagen}>
+              <option className={style.option} key={country.imagen} value={country.imagen}>
                 {country.name}
               </option>
             ))}

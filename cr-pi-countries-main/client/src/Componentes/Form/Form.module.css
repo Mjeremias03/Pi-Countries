@@ -52,6 +52,8 @@
   label {
     margin-right: 15px;
     line-height: 32px;
+    font-weight: 600;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   }
 
  /* Estilos para el select */
@@ -74,7 +76,6 @@
   border-color: #0a0a0a;
 }
 
-/* Form.module.css */
 .customSelect {
   appearance: none;
   padding: 10px;
@@ -90,7 +91,7 @@
 
 .customSelect:hover {
   border-color: #66afe9;
-  box-shadow: 0 0 5px #66afe9;
+  box-shadow: 0 0 6px #66afe9; /* Aumenta el tamaño de la sombra */
 }
 
 /* Cambiar el color del texto de las opciones seleccionadas */
@@ -140,13 +141,12 @@ color: #0a0a0a;
 }
 .checkboxContainer {
   display: flex; /* Mostrar los checkboxes en línea */
-  flex-wrap: wrap; /* Permitir que los checkboxes se envuelvan a la siguiente línea si no caben */
+  flex-wrap: wrap; 
+}
+.checkboxItem {
+  margin-right: 10px; 
 }
 
-.checkboxItem {
-  margin-right: 10px; /* Agregar espacio entre los checkboxes */
-}
-/* Cambia el nombre de la clase a algo más específico */
 .selectedImages {
   height: 100%;
   width: 100%;
@@ -166,4 +166,14 @@ button.removeButton {
   padding: 0px 8px; 
   height: 30px;/* Ajusta el padding como desees */
   font-size: 12px; /* Ajusta el tamaño de fuente como desees */
+}
+
+.option{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+}
+
+.option:hover{
+  border-color: #303131;
+  box-shadow: 0 0 10px #464849; /* Aumenta el tamaño de la sombra */
 }
