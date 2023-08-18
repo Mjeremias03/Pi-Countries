@@ -68,7 +68,7 @@
     border-radius: 20px;
   }
 
-  button:hover{
+  .button:hover{
     background-color: rgba(7, 7, 7, 0.87);
     transition: 1s;
   }

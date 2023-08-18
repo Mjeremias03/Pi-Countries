@@ -58,6 +58,9 @@ const Form = () => {
     if (formData.countries.length === 0) {
       newErrors.countries = "Seleccione un país";
     }
+    if(formData.name.length > 30){
+      newErrors.name = "Menos caracteres"
+    }
     setErrors(newErrors);
   };
   const handleChange = (event) => {
@@ -118,7 +121,7 @@ const Form = () => {
     }
   };
 
-  console.log(formData.countries);
+  console.log(formData);
   return (
     <form onSubmit={handleSubmit} className={style.formulario}>
       <div className={style.form}>
